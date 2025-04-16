@@ -57,3 +57,23 @@ WHERE cars.id = 3;
 
 
 UPDATE cars SET make = "mazda", model = "miata" WHERE id = 5 LIMIT 1;
+
+
+
+CREATE TABLE houses(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  sqft SMALLINT UNSIGNED NOT NULL,
+  bedrooms TINYINT UNSIGNED NOT NULL,
+  bathrooms DOUBLE UNSIGNED NOT NULL,
+  img_url SMALLINT UNSIGNED NOT NULL,
+  description VARCHAR(255),
+  price INT UNSIGNED NOT NULL,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time Last Updated At',
+  creator_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES accounts(id) ON DELETE CASCADE
+);
+
+INSERT INTO
+houses (sqft, bedrooms, bathrooms, img_url, description, price)
+VALUES (2000, 2, 2, 'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Cozy little place. Nice neighborhood, good schools, businesses nearby.', 500000)
