@@ -70,6 +70,8 @@ CREATE TABLE IF NOT EXISTS houses(
   price INT UNSIGNED NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT 'Time Created',
   updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Time Last Updated At',
+  someone_died BOOLEAN DEFAULT false,
+  is_haunted BOOLEAN DEFAULT false,
   creator_id VARCHAR(255) NOT NULL,
   FOREIGN KEY (creator_id) REFERENCES accounts(id) ON DELETE CASCADE
 );
@@ -77,7 +79,7 @@ CREATE TABLE IF NOT EXISTS houses(
 DROP TABLE houses
 
 INSERT INTO 
-houses (sqft, bedrooms, bathrooms, img_url, description, price, creator_id)
-VALUES (2000, 2, 2, 'https://plus.unsplash.com/premium_photo-1689609950112-d66095626efb?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', 'Cozy little place. Nice neighborhood, good schools, businesses nearby.', 500000, '67e325c8d0ea7c2e5c72e705')
+houses (sqft, bedrooms, bathrooms, img_url, description, price, someone_died, is_haunted, creator_id)
+VALUES (3000, 4, 3, 'https://images.unsplash.com/photo-1481018085669-2bc6e4f00eed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', "DEFINITELY not haunted and nobody died here. Don't listen to Sharon.", 200000, true, true,'67e3273fee37d52171a8018c')
 
 SELECT * FROM houses
