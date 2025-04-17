@@ -53,4 +53,18 @@ public class JobsService
     return job;
 
   }
+
+  internal string DeleteJob(int jobId, Account userInfo)
+  {
+    Job job = GetJobById(jobId);
+
+    if (job.CreatorId != userInfo.Id)
+    {
+      throw new Exception($"You cannot delete a listing that you did not create, {userInfo.Name}".ToUpper());
+    }
+
+    _jobsRepository.DeleteJob(jobId);
+
+    return $"Your {job.JobTitle} job listing for {job.CompanyName} (Id: {job.Id}) has been deleted, you monster.";
+  }
 }

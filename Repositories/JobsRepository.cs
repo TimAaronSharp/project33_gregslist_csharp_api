@@ -101,4 +101,20 @@ public class JobsRepository
       throw new Exception($"{rowsAffected} rows were updated which is really bad and means your code is bad and you should feel bad.".ToUpper());
     }
   }
+
+  internal void DeleteJob(int jobId)
+  {
+    string sql = "DELETE FROM jobs WHERE id = @jobId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { jobId });
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No rows were deleted".ToUpper());
+    }
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} rows were deleted and that is really bad, which means your code is bad and your should feel bad".ToUpper());
+    }
+  }
 }

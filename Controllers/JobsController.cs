@@ -78,4 +78,21 @@ public class JobsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [Authorize]
+  [HttpDelete("{jobId}")]
+
+  public async Task<ActionResult<string>> DeleteJob(int jobId)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      string deleteMessage = _jobsService.DeleteJob(jobId, userInfo);
+      return Ok(deleteMessage);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }
