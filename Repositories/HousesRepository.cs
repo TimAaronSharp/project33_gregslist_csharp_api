@@ -115,7 +115,7 @@ public class HousesRepository
 
     if (rowsAffected > 1)
     {
-      throw new Exception($"{rowsAffected} rows were deleted and that is really bad, which means your code is bad and your should feel bad".ToUpper());
+      throw new Exception($"{rowsAffected} rows were deleted and that is really bad, which means your code is bad and your should feel bad".ToUpper())
     }
   }
 }
