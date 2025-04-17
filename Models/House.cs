@@ -3,9 +3,9 @@ namespace System.ComponentModel.DataAnnotations;
 public class House
 {
   public int Id { get; set; }
-  public int Sqft { get; set; }
-  public int Bedrooms { get; set; }
-  public double Bathrooms { get; set; }
+  public int? Sqft { get; set; }
+  public int? Bedrooms { get; set; }
+  public float? Bathrooms { get; set; }
   [Url, MaxLength(1000)] public string ImgUrl { get; set; }
   [MaxLength(500)] public string Description { get; set; }
   public int? Price { get; set; } //NOTE added null check(?) to allow someone listing for $0

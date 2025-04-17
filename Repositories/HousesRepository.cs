@@ -71,6 +71,36 @@ public class HousesRepository
     }, houseData).SingleOrDefault();
     return createdHouse;
   }
+
+  internal void UpdateHouse(House house)
+  {
+    string sql = @"
+    UPDATE houses
+    SET
+    sqft = @Sqft,
+    bedrooms = @Bedrooms,
+    bathrooms = @Bathrooms,
+    img_url = @ImgUrl,
+    description = @Description,
+    price = @Price,
+    someone_died = @SomeoneDied,
+    is_haunted = @IsHaunted
+    WHERE id = @Id
+    LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, house);
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No rows were updated".ToUpper());
+    }
+
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} rows were updated which is really bad and means your code is bad and you should feel bad.".ToUpper());
+    }
+
+  }
 }
 
 
