@@ -47,4 +47,28 @@ public class JobsRepository
     }, new { jobId }).SingleOrDefault();
     return foundJob;
   }
+
+  internal Job CreateJob(Job jobData)
+  {
+    string sql = @"
+   INSERT INTO
+   jobs (company_name, job_title, salary, description, site_location, company_headquarters, is_remote, sucks, creator_id)
+   VALUES (@CompanyName, @JobTitle, @Salary, @Description, @SiteLocation, @CompanyHeadquarters, @IsRemote, @Sucks, @CreatorId);
+   
+   SELECT
+   jobs.*,
+   accounts.*
+   FROM jobs
+   INNER JOIN accounts ON accounts.id = jobs.creator_id
+   WHERE jobs.id = LAST_INSERT_ID();";
+
+    Job createdJob = _db.Query(sql, (Job job, Account account) =>
+    {
+      job.Creator = account;
+      return job;
+    }, jobData).SingleOrDefault();
+
+    return createdJob;
+
+  }
 }

@@ -22,4 +22,11 @@ public class JobsService
     Job job = _jobsRepository.GetJobById(jobId);
     return job;
   }
+
+  internal Job CreateJob(Job jobData, Account userInfo)
+  {
+
+    Job job = _jobsRepository.CreateJob(jobData);
+    return job;
+  }
 }

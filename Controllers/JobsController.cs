@@ -43,4 +43,22 @@ public class JobsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [Authorize]
+  [HttpPost]
+
+  public async Task<ActionResult<Job>> CreateJob([FromBody] Job jobData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      jobData.CreatorId = userInfo.Id;
+      Job job = _jobsService.CreateJob(jobData, userInfo);
+      return Ok(job);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }
