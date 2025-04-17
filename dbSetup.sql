@@ -85,3 +85,45 @@ VALUES (3000, 4, 3, 'https://images.unsplash.com/photo-1481018085669-2bc6e4f00ee
 SELECT * FROM houses
 
 SELECT houses.*, accounts.* FROM houses INNER JOIN accounts ON accounts.id = houses.creator_id
+
+CREATE TABLE IF NOT EXISTS jobs(
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  company_name VARCHAR(255) NOT NULL,
+  job_title VARCHAR(255) NOT NULL,
+  salary INT UNSIGNED NOT NULL,
+  description VARCHAR(1000) NOT NULL,
+  site_location VARCHAR(255) NOT NULL,
+  company_headquarters VARCHAR(255) NOT NULL,
+  is_remote BOOLEAN DEFAULT false,
+  sucks BOOLEAN DEFAULT false,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  creator_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (creator_id) REFERENCES accounts(id) ON DELETE CASCADE
+);
+
+DROP TABLE jobs
+
+INSERT INTO
+jobs (company_name, job_title, salary, description, site_location, company_headquarters, is_remote, sucks, creator_id)
+VALUES ("Joe's Taxidermy", "Skin Master", 30000, "You snuff 'em, we stuff em!", "That shady place off 9000 South and Bangerter", "A non-extradition country.", true, true, "67e325c8d0ea7c2e5c72e705");
+
+INSERT INTO
+jobs (company_name, job_title, salary, description, site_location, company_headquarters, is_remote, sucks, creator_id)
+VALUES ("Underground Emo Music Records", "Chief Edgelord", 25000, "You've probably never heard of it.", "It's not really underground, stupid.", "Ok, this one is underground.", true, false, "67e325c8d0ea7c2e5c72e705");
+
+SELECT * FROM jobs
+
+UPDATE jobs
+    SET
+    company_name = @CompanyName,
+    job_title = @JobTitle,
+    salary = @Salary,
+    description = @Description,
+    site_location = @SiteLocation,
+    company_headquarters = @CompanyHeadquarters,
+    is_remote = @IsRemote,
+    sucks = @Sucks,
+    creator_id = @CreatorId
+    WHERE id = @Id
+    LIMIT 1;
