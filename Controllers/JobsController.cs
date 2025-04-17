@@ -29,4 +29,18 @@ public class JobsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [HttpGet("{jobId}")]
+  public ActionResult<Job> GetJobById(int jobId)
+  {
+    try
+    {
+      Job job = _jobsService.GetJobById(jobId);
+      return Ok(job);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }

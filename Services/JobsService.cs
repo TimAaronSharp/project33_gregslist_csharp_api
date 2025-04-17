@@ -16,4 +16,10 @@ public class JobsService
     List<Job> jobs = _jobsRepository.GetAllJobs();
     return jobs;
   }
+
+  internal Job GetJobById(int jobId)
+  {
+    Job job = _jobsRepository.GetJobById(jobId);
+    return job;
+  }
 }

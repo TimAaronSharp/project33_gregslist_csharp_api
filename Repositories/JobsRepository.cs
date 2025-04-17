@@ -29,4 +29,22 @@ public class JobsRepository
     }).ToList();
     return jobs;
   }
+
+  internal Job GetJobById(int jobId)
+  {
+    string sql = @"
+    SELECT
+    jobs.*,
+    accounts.*
+    FROM jobs
+    INNER JOIN accounts ON accounts.id = jobs.creator_id
+    WHERE jobs.id = @jobId;";
+
+    Job foundJob = _db.Query(sql, (Job job, Account account) =>
+    {
+      job.Creator = account;
+      return job;
+    }, new { jobId }).SingleOrDefault();
+    return foundJob;
+  }
 }
