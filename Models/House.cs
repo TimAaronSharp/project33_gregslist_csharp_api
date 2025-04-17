@@ -13,5 +13,6 @@ public class House
   public DateTime UpdatedAt { get; set; }
   public bool SomeoneDied { get; set; }
   public bool IsHaunted { get; set; }
+  public string CreatorId { get; set; }
   public Account Creator { get; set; }
 }

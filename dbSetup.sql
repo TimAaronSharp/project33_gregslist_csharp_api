@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS cars(
 
 INSERT INTO 
 cars (make, model, year, price, color, mileage, engine_type, img_url, has_clean_title, creator_id)
-VALUES ('honda', 's2000', 2008, 20000, 'silver', 200000, 'medium', 'https://images.unsplash.com/photo-1723407338018-709fbf9ed494?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHMyMDAwfGVufDB8fDB8fHww', false, '670ff93326693293c631476f');
+VALUES ('honda', 's2000', 2008, 20000, 'silver', 200000, 'medium', 'https://images.unsplash.com/photo-1723407338018-709fbf9ed494?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fHMyMDAwfGVufDB8fDB8fHww', false, '67e3273fee37d52171a8018c');
 
 SELECT * FROM accounts;
 
@@ -83,3 +83,5 @@ houses (sqft, bedrooms, bathrooms, img_url, description, price, someone_died, is
 VALUES (3000, 4, 3, 'https://images.unsplash.com/photo-1481018085669-2bc6e4f00eed?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', "DEFINITELY not haunted and nobody died here. Don't listen to Sharon.", 200000, true, true,'67e3273fee37d52171a8018c')
 
 SELECT * FROM houses
+
+SELECT houses.*, accounts.* FROM houses INNER JOIN accounts ON accounts.id = houses.creator_id
