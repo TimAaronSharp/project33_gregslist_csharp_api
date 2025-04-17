@@ -114,3 +114,16 @@ VALUES ("Underground Emo Music Records", "Chief Edgelord", 25000, "You've probab
 
 SELECT * FROM jobs
 
+UPDATE jobs
+    SET
+    company_name = @CompanyName,
+    job_title = @JobTitle,
+    salary = @Salary,
+    description = @Description,
+    site_location = @SiteLocation,
+    company_headquarters = @CompanyHeadquarters,
+    is_remote = @IsRemote,
+    sucks = @Sucks,
+    creator_id = @CreatorId
+    WHERE id = @Id
+    LIMIT 1;

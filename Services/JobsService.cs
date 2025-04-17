@@ -29,4 +29,28 @@ public class JobsService
     Job job = _jobsRepository.CreateJob(jobData);
     return job;
   }
+
+  internal Job UpdateJob(int jobId, Job updateJobData, Account userInfo)
+  {
+    Job job = GetJobById(jobId);
+
+    if (job.CreatorId != userInfo.Id)
+    {
+      throw new Exception($"You are not allowed to update a listing you did not create, {userInfo.Name}.".ToUpper());
+    }
+
+    job.CompanyName = updateJobData.CompanyName ?? job.CompanyName;
+    job.JobTitle = updateJobData.JobTitle ?? job.JobTitle;
+    job.Salary = updateJobData.Salary ?? job.Salary;
+    job.Description = updateJobData.Description ?? job.Description;
+    job.SiteLocation = updateJobData.SiteLocation ?? job.SiteLocation;
+    job.CompanyHeadquarters = updateJobData.CompanyHeadquarters ?? job.CompanyHeadquarters;
+    job.IsRemote = updateJobData.IsRemote ?? job.IsRemote;
+    job.Sucks = updateJobData.Sucks ?? job.Sucks;
+
+    _jobsRepository.UpdateJob(job);
+
+    return job;
+
+  }
 }

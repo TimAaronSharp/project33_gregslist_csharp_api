@@ -61,4 +61,21 @@ public class JobsController : ControllerBase
       return BadRequest(exception.Message);
     }
   }
+
+  [Authorize]
+  [HttpPut("{jobId}")]
+  public async Task<ActionResult<Job>> UpdateJob(int jobId, [FromBody] Job updateJobData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      Job job = _jobsService.UpdateJob(jobId, updateJobData, userInfo);
+      return Ok(job);
+
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
 }

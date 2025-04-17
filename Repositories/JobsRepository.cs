@@ -71,4 +71,34 @@ public class JobsRepository
     return createdJob;
 
   }
+
+  internal void UpdateJob(Job job)
+  {
+    string sql = @"
+    UPDATE jobs
+    SET
+    company_name = @CompanyName,
+    job_title = @JobTitle,
+    salary = @Salary,
+    description = @Description,
+    site_location = @SiteLocation,
+    company_headquarters = @CompanyHeadquarters,
+    is_remote = @IsRemote,
+    sucks = @Sucks,
+    creator_id = @CreatorId
+    WHERE id = @Id
+    LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, job);
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No rows were updated".ToUpper());
+    }
+
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} rows were updated which is really bad and means your code is bad and you should feel bad.".ToUpper());
+    }
+  }
 }
