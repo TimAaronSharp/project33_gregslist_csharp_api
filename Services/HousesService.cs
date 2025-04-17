@@ -57,4 +57,18 @@ public class HousesService
 
 
   }
+
+  internal string DeleteHouse(int houseId, Account userInfo)
+  {
+    House house = GetHouseById(houseId);
+
+    if (house.CreatorId != userInfo.Id)
+    {
+      throw new Exception($"You are not allowed to delete a listing you did not create, {userInfo.Name}".ToUpper());
+    }
+
+    _housesRepository.DeleteHouse(houseId);
+
+    return $"Your listing for a {house.Sqft} sqft {house.Bedrooms} bed {house.Bathrooms} bath (Id: {house.Id}) has been deleted, you monster.";
+  }
 }

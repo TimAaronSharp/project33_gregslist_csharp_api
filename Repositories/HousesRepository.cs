@@ -101,6 +101,23 @@ public class HousesRepository
     }
 
   }
+
+  internal void DeleteHouse(int houseId)
+  {
+    string sql = "DELETE FROM houses WHERE id = @houseId LIMIT 1;";
+
+    int rowsAffected = _db.Execute(sql, new { houseId });
+
+    if (rowsAffected == 0)
+    {
+      throw new Exception("No rows were deleted".ToUpper());
+    }
+
+    if (rowsAffected > 1)
+    {
+      throw new Exception($"{rowsAffected} rows were deleted and that is really bad, which means your code is bad and your should feel bad".ToUpper());
+    }
+  }
 }
 
 
