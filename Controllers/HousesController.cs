@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc.Diagnostics;
 
 namespace gregslist_dotnet.Controllers;
 
@@ -37,7 +38,25 @@ public class HousesController : ControllerBase
     try
     {
       House house = _housesService.GetHouseById(houseId);
-      return house;
+      return Ok(house);
+    }
+    catch (Exception exception)
+    {
+      return BadRequest(exception.Message);
+    }
+  }
+
+  [Authorize]
+  [HttpPost]
+  // NOTE The request body properties need to match how they are written in the class model, NOT how they are written for sql (a clue is that the request body (houseData) is of type House, so those are the variable names that must be used in the request body, ie. imgUrl instead of img_url).
+  public async Task<ActionResult<House>> CreateHouse([FromBody] House houseData)
+  {
+    try
+    {
+      Account userInfo = await _auth0Provider.GetUserInfoAsync<Account>(HttpContext);
+      houseData.CreatorId = userInfo.Id;
+      House house = _housesService.CreateHouse(houseData);
+      return Ok(house);
     }
     catch (Exception exception)
     {
